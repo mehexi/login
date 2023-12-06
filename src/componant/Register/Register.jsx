@@ -6,22 +6,28 @@ import { Link } from "react-router-dom";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile
+  updateProfile,
+  sendEmailVerification
 } from "firebase/auth";
 import { app } from "../../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Register = () => {
   const auth = getAuth(app);
   const rePassRef = useRef(null);
   const [matchPass, setMatchPass] = useState(true);
   const [agree, setAgree] = useState(false);
-
-  const notify = () => toast("Wow so easy!");
+  const [showPass, setShowPass] = useState(false);
 
   const handleAgree = () => {
     setAgree(!agree);
+  };
+
+  const handleShowPass = () => {
+    setShowPass(!showPass);
   };
 
   const handleUser = (e) => {
@@ -47,9 +53,12 @@ const Register = () => {
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
+            const errorMessage = error.message;
+            toast.warn(errorMessage)
           console.log(errorMessage);
         });
+        sendEmailVerification(auth.currentUser)
+        // e.target.reset()
     } else {
       rePassRef.current.value = "";
       setMatchPass(false);
@@ -92,15 +101,22 @@ const Register = () => {
         name="password"
         className="border-b-2 px-6 py-3 w-full  text-xl focus:outline-none focus:border-b-2 focus:border-green-400"
       />
-      <input
-        type="password"
-        placeholder="Re type Password"
-        name="rePassword"
-        ref={rePassRef}
-        className={`border-b-2 px-6 py-3 w-full  text-xl focus:outline-none focus:border-b-2 focus:border-green-400 ${
-          matchPass ? "" : "border-red-400"
-        }`}
-      />
+      <div className="relative">
+        <input
+          type={showPass ? "password" : "text"}
+          placeholder="password"
+          name="rePassword"
+          className="border-b-2 px-6 py-3 w-full text-xl focus:outline-none focus:border-b-2 focus:border-green-400"
+        />
+        <Link onClick={handleShowPass} className="absolute top-1/2 right-3 text-gray-400">
+          {showPass ? (
+            <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
+          ) : (
+            <FontAwesomeIcon icon={faEyeSlash}></FontAwesomeIcon>
+          )}
+        </Link>
+      </div>
+
       <div className="flex gap-3 px-6">
         <input
           onChange={handleAgree}

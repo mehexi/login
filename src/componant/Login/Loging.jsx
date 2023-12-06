@@ -21,21 +21,7 @@ const Loging = () => {
           name="email"
           className="border-b-2 px-6 py-3 w-full text-xl focus:outline-none focus:border-b-2 focus:border-green-400"
         />
-        <div className="relative">
-          <input
-            type={showPass ? "password" : "text"}
-            placeholder="password"
-            name="password"
-            className="border-b-2 px-6 py-3 w-full text-xl focus:outline-none focus:border-b-2 focus:border-green-400"
-          />
-          <Link onClick={handleShowPass} className="absolute top-1/2 right-3">
-            {showPass ? (
-              <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
-            ) : (
-              <FontAwesomeIcon icon={faEyeSlash}></FontAwesomeIcon>
-            )}
-          </Link>
-        </div>
+        
         <Link className="ml-auto ">Forgot password?</Link>
         <button className="bg-green-300 w-full py-3 rounded-full">
           submit
