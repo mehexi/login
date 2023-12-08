@@ -9,4 +9,8 @@ This repository contains the code for a user login and registration form, provid
 
 ## Technologies Used
 
-[HTML, CSS, JavaScript]
+HTML, CSS, JavaScript
+
+## FrameWork used
+
+react.js(vite)
